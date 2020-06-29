@@ -30,6 +30,10 @@ Run_left.append(pygame.transform.flip(pygame.image.load(r'C:\Users\Student\Docum
 Run_left.append(pygame.transform.flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\run7.png'), True, False))
 Run_left.append(pygame.transform.flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\run8.png'), True, False))
 
+MidAir = []
+MidAir.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\mid_air1.gif'))
+MidAir.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\mid_air2.gif'))
+
 
 # in_air = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\mid-air.gif')
 
@@ -53,11 +57,11 @@ def redrawGameWindow():
     display_surface.blit(background, (0, 0.5 * Y)) 
     display_surface.blit(ground_tiles, (0, 0.5 * Y))
 
-    if runCount + 1 >= 27:
+    if runCount + 1 >= 24:
         runCount = 0
 
     if left:
-        display_surface.blit(Run_right[runCount//3], (40,40))
+        display_surface.blit(Run_left[runCount//3], (40,40))
         runCount += 1
     elif right:
         display_surface.blit(Run_right[runCount//3], (40,40))
