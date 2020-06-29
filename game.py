@@ -2,7 +2,7 @@ import pygame
 import random
 from generator import Generator
 from character import Character
-from platform import Platform
+from platformclass import Platform
 
 #init pygame and create screen
 pygame.init()
@@ -22,7 +22,10 @@ GENERATOR = Generator(WIDTH, HEIGHT, PLATFORM_WIDTH, PLATFORM_HEIGHT)
 #add basic platforms
 platforms.append(Platform(0, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
 platforms.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
-character = Character()
+character = Character(platforms)
+characters = pygame.sprite.Group()
+characters.add(character)
+
 #loop vars
 counter = 0
 last_platform_height = PLATFORM_HEIGHT
@@ -33,7 +36,19 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        # add getting user input...
+        if event.type is pygame.KEYDOWN:
+            if event.key == ord('a'):
+                character.move(-10, 0)
+            elif event.key == ord('d'):
+                character.move(10, 0)
+            elif event.key == ord('w'):
+                print("jump")
+        if event.type is pygame.KEYUP:
+            if event.key == ord('a'):
+                character.move(10, 0)
+            elif event.key == ord('d'):
+                character.move(-10, 0)
+
 
     for i in range(len(platforms)):
         try:
@@ -46,7 +61,7 @@ while running:
 
     SCREEN.fill((255,255,255))
     character.update()
-
+    characters.draw(SCREEN)
 
 
     #charecter collision
