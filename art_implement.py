@@ -5,23 +5,33 @@ import pygame
 pygame.init()
 
 
-grass_tiles = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Multi_Platformer_Tileset_v2\Grassland\Terrain\Grassland_Terrain_Tileset.png')
-ground_tiles = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_3.png')
-background = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_2.png')
-further_background = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_1.png')
+grass_tiles = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Terrain\Grassland_Terrain_Tileset.png')
+ground_tiles = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_3.png')
+background = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_2.png')
+further_background = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_1.png')
 
-Run = []
+Run_right = []
+Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_0_delay-0.1s.png'))
+Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_1_delay-0.1s.png'))
+Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_2_delay-0.1s.png'))
+Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_3_delay-0.1s.png'))
+Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_4_delay-0.1s.png'))
+Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_5_delay-0.1s.png'))
+Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_6_delay-0.1s.png'))
+Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_7_delay-0.1s.png'))
 
-Run.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\Run\frame_0_delay-0.1s.png'))
-Run.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\Run\frame_1_delay-0.1s.png'))
-Run.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\Run\frame_2_delay-0.1s.png'))
-Run.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\Run\frame_3_delay-0.1s.png'))
-Run.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\Run\frame_4_delay-0.1s.png'))
-Run.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\Run\frame_5_delay-0.1s.png'))
-Run.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\Run\frame_6_delay-0.1s.png'))
-Run.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\Run\frame_7_delay-0.1s.png'))
+Run_left = []
+Run_left.append(flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_0_delay-0.1s.png'), True, False))
+Run_left.append(flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_1_delay-0.1s.png'), True, False))
+Run_left.append(flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_2_delay-0.1s.png'), True, False))
+Run_left.append(flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_3_delay-0.1s.png'), True, False))
+Run_left.append(flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_4_delay-0.1s.png'), True, False))
+Run_left.append(flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_5_delay-0.1s.png'), True, False))
+Run_left.append(flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_6_delay-0.1s.png'), True, False))
+Run_left.append(flip(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\Run\frame_7_delay-0.1s.png'), True, False))
 
-in_air = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\mid-air.gif')
+
+# in_air = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\mid-air.gif')
 
 pygame.display.init()
 pygame.display.set_mode()
@@ -45,9 +55,15 @@ def redrawGameWindow():
     if runCount + 1 >= 27:
         runCount = 0
 
-    if run_bool:
-        display_surface.blit(Run[runCount//3], (40,40))
+    if left:
+        display_surface.blit(Run_right[runCount//3], (40,40))
         runCount += 1
+    elif right:
+        display_surface.blit(Run_right[runCount//3], (40,40))
+        runCount +=1
+    else:
+        display_surface.blit(Run_right[0], (40,40))
+
     pygame.display.update()  
 
 
@@ -62,7 +78,6 @@ while game :
 
     keys = pygame.key.get_pressed()
     
-    run_bool = True
     if keys[pygame.K_LEFT]:
         left = True
         right = False
@@ -71,6 +86,9 @@ while game :
         left = False
     else:
         runCount = 0
+
+
+
     # if run_bool == True:
         # runCount = runCount += 1
 
