@@ -16,7 +16,7 @@ running = True
 counter = 100
 
 #pass in platforms max x, width, and height
-g = Generator(600, 150, 20)
+g = Generator(600, 600, 150, 20)
 last_platform_height = 200
 new_platform_mod = 250
 while running:
