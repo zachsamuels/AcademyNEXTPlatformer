@@ -7,7 +7,7 @@ class Character(pygame.sprite.Sprite):
 	Character class that handles movement and user input
 	'''
 
-	def __init__(self):
+	def __init__(self, platforms):
 		pygame.sprite.Sprite.__init__(self)
 		image = pygame.image.load(os.path.join('images', 'character.png'))
 		self.image = pygame.transform.scale(image, (50,50))
@@ -15,6 +15,7 @@ class Character(pygame.sprite.Sprite):
 		self.x = 0
 		self.y = 0
 		self.gravity = 9.8
+		self.platforms = platforms
 
 	def move(self, x, y):
 		self.x += x
@@ -22,7 +23,10 @@ class Character(pygame.sprite.Sprite):
 
 	def update(self):
 		self.rect.x += self.x
-		self.rect.y += self.y + self.gravity
+		if not any([pygame.sprite.collide_rect(self, platform) for platform in self.platforms]):
+			self.rect.y += self.y + self.gravity
+		else:
+			self.rect.y += self.y
 
 
 

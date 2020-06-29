@@ -2,7 +2,7 @@ import pygame
 import random
 from generator import Generator
 from character import Character
-from platform import Platform
+from platformclass import Platform
 
 #init pygame and create screen
 pygame.init()
@@ -22,7 +22,7 @@ GENERATOR = Generator(WIDTH, HEIGHT, PLATFORM_WIDTH, PLATFORM_HEIGHT)
 #add basic platforms
 sprites.append(Platform(0, 300, PLATFORM_HEIGHT, PLATFORM_WIDTH))
 sprites.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
-character = Character()
+character = Character(sprites)
 #loop vars
 counter = 0
 last_platform_height = PLATFORM_HEIGHT
@@ -33,7 +33,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         # add getting user input...
-
+    '''
     for i in range(len(sprites)):
         try:
             if sprites[i].move():
@@ -41,7 +41,7 @@ while running:
                 i -= 1
         except:
             pass
-
+    '''
 
     SCREEN.fill((255,255,255))
     character.update()

@@ -1,7 +1,8 @@
 import pygame
 import random
-from platform import Platform
+from platformclass import Platform
 from generator import Generator
+from character import Character
 
 pygame.init()
 
@@ -19,9 +20,26 @@ counter = 100
 g = Generator(600, 600, 150, 20)
 last_platform_height = 200
 new_platform_mod = 250
+character = Character(platforms)
+characters = pygame.sprite.Group()
+characters.add(character)
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for e in pygame.event.get():
+        if e.type is pygame.KEYDOWN:
+            if e.key == ord('a'):
+                character.move(-10, 0)
+            elif e.key == ord('d'):
+                character.move(10, 0)
+            elif e.type is pygame.K_SPACE:
+                print("space")
+        if e.type is pygame.KEYUP:
+            if e.key == ord('a'):
+                character.move(10, 0)
+            elif e.key == ord('d'):
+                character.move(-10, 0)
+            elif e.type is pygame.K_SPACE:
+                print("space")
+        if e.type == pygame.QUIT:
             running = False
 
     for i in range(len(platforms)):
@@ -47,4 +65,7 @@ while running:
         new_platform_mod = random.randint(200, 450)
         counter = 0
 
+    character.update()
+    characters.draw(screen)
+    
     pygame.display.flip()
