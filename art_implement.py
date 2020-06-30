@@ -5,7 +5,7 @@ import pygame
 pygame.init()
 
 
-grass_tiles = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Terrain\Grassland_Terrain_Tileset.png')
+grass_tiles = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Terrain\Grass_Tileset.png')
 ground_tiles = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_3.png')
 background = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_2.png')
 further_background = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_1.png')
@@ -34,6 +34,20 @@ MidAir = []
 MidAir.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\mid_air1.gif'))
 MidAir.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\mid_air2.gif'))
 
+idle = []
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle1.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle2.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle3.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle4.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle5.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle6.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle7.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle8.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle9.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle10.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle11.gif'))
+idle.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\idle12.gif'))
+
 
 # in_air = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\mid-air.gif')
 
@@ -47,11 +61,16 @@ Y = 400
 X_pos = 0
 left = False
 right = False
+chillCount = 0
   
 display_surface = pygame.display.set_mode((X, Y )) 
 
 def redrawGameWindow():
     global runCount
+    global vspeed
+    global airTicks
+    global chillCount
+
     display_surface.fill(sky)
     display_surface.blit(further_background, (0, 0.5 * Y))
     display_surface.blit(background, (0, 0.5 * Y)) 
@@ -60,14 +79,24 @@ def redrawGameWindow():
     if runCount + 1 >= 24:
         runCount = 0
 
-    if left:
+    if airTicks + 1 >= 6:
+        airTicks = 0
+
+    if chillCount + 1 >= 36:
+        chillCount = 0
+
+    if not vspeed == 0:
+        display_surface.blit(MidAir[airTicks//3], (40,40))
+        airTicks += 1
+    elif left:
         display_surface.blit(Run_left[runCount//3], (40,40))
         runCount += 1
     elif right:
         display_surface.blit(Run_right[runCount//3], (40,40))
-        runCount +=1
+        runCount += 1
     else:
-        display_surface.blit(Run_right[0], (40,40))
+        display_surface.blit(idle[chillCount//3], (40,40))
+        chillCount += 1
 
     pygame.display.update()  
 
@@ -83,13 +112,24 @@ while game :
 
     keys = pygame.key.get_pressed()
     
+    if keys[pygame.K_UP]:
+        vspeed = 4
+        chillCount = 0
+    else:
+        vspeed = 0
+        airTicks = 0
+
     if keys[pygame.K_LEFT]:
         left = True
         right = False
+        chillCount = 0
     elif keys[pygame.K_RIGHT]:
         right = True
         left = False
+        chillCount = 0
     else:
+        left = False
+        right = False
         runCount = 0
 
 

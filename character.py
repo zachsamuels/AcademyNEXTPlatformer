@@ -30,7 +30,12 @@ class Character(pygame.sprite.Sprite):
 		if not any([pygame.sprite.collide_rect(self, platform) for platform in self.platforms]):
 			self.rect.y += self.y + self.gravity
 		else:
-			self.rect.y += self.y
+			for platform in self.platforms:
+				if pygame.sprite.collide_rect(self, platform):
+					if self.rect.midbottom[1] > platform.rect.center[1]:
+						self.rect.y += self.y + self.gravity			
+					else:
+						self.rect.y += self.y
 		self.move_left()
 	def move_left(self):
         #moves the rectanlge to the left and updates the rect variable
