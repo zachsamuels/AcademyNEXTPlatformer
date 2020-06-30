@@ -1,6 +1,7 @@
 import pygame
 import random
 import sys
+import os
 from generator import Generator
 from character import Character
 from platformclass import Platform
@@ -23,6 +24,14 @@ enemies = []
 PLATFORM_WIDTH, PLATFORM_HEIGHT = 150, 20
 GENERATOR = Generator(WIDTH, HEIGHT, PLATFORM_WIDTH, PLATFORM_HEIGHT)
 
+#simple bg art
+X = 600
+Y = 600
+ground_tiles = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_3.png'))
+background = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_2.png'))
+further_background = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_1.png'))
+sky = (173, 216, 230) 
+
 #add basic platforms
 platforms.append(Platform(0, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
 platforms.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
@@ -39,7 +48,9 @@ score = 0
 bullet_cooldown = 25
 
 while running:
+    
     for event in pygame.event.get():
+        
         if event.type == pygame.QUIT:
             running = False
         if event.type is pygame.KEYDOWN:
@@ -81,7 +92,10 @@ while running:
         enemy.move()
         if bullet_counter % 50 == 0:
             bullets.append(enemy.shoot())
-    SCREEN.fill((255,255,255))
+    SCREEN.fill(sky)
+    SCREEN.blit(further_background, (0, Y - 520))
+    SCREEN.blit(background, (0, Y - 460)) 
+    SCREEN.blit(ground_tiles, (0, Y - 400))
     character.update()
     characters.draw(SCREEN)
     for i in range(len(enemies)):

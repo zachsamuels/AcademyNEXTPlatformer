@@ -1,4 +1,7 @@
 import pygame
+import sys
+import os
+import getopt
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height):
@@ -8,8 +11,7 @@ class Platform(pygame.sprite.Sprite):
         self.y = y
         self.x = x
         #Create a temp image for the platform... will replace with sprite
-        self.image = pygame.Surface([width, height])
-        self.image.fill(0)
+        self.image = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Terrain','platform.png'))
 
         #creates a pygame rect to move
         self.rect = self.image.get_rect()
