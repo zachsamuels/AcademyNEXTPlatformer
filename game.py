@@ -1,5 +1,6 @@
 import pygame
 import random
+import sys
 from generator import Generator
 from character import Character
 from platformclass import Platform
@@ -65,7 +66,8 @@ while running:
 
 
     #charecter collision
-
+    if character.rect.y > HEIGHT:
+        sys.exit()
     #generate new platforms
     counter += 1
     if (counter % new_platform_mod == 0):
