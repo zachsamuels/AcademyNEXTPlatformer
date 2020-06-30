@@ -10,6 +10,13 @@ ground_tiles = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXT
 background = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_2.png')
 further_background = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\Grassland\Background\GrassLand_Background_1.png')
 
+plat_top_left = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\top_left.png')
+plat_top_middle = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\top_middle.png')
+plat_top_right = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\top_right.png')
+plat_bottom_left = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\bottom_left.png')
+plat_bottom_middle = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\bottom_middle.png')
+plat_bottom_right = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\bottom_right.png')
+
 Run_right = []
 Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\run0.png'))
 Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\run1.png'))
@@ -75,6 +82,13 @@ def redrawGameWindow():
     display_surface.blit(further_background, (0, 0.5 * Y))
     display_surface.blit(background, (0, 0.5 * Y)) 
     display_surface.blit(ground_tiles, (0, 0.5 * Y))
+
+    display_surface.blit(plat_top_left, (400, 0.75 * Y))
+    display_surface.blit(plat_top_middle, (425, 0.75 * Y))
+    display_surface.blit(plat_top_right, (450, 0.75 * Y))
+    display_surface.blit(plat_bottom_left, (400, 0.75 * Y + 25))
+    display_surface.blit(plat_bottom_middle, (425, 0.75 * Y + 25))
+    display_surface.blit(plat_bottom_right, (450, 0.75 * Y + 25))
 
     if runCount + 1 >= 24:
         runCount = 0
