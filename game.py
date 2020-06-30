@@ -45,7 +45,8 @@ while running:
             elif event.key == ord('d'):
                 character.move(10, 0)
             elif event.key == ord('w'):
-                print("jump")
+                if not character.jumping and character.can_jump:
+                    character.jumping = True
             elif event.key == ord('s'):
                 bullets.append(character.shoot())
         if event.type is pygame.KEYUP:
@@ -53,7 +54,7 @@ while running:
                 character.move(10, 0)
             elif event.key == ord('d'):
                 character.move(-10, 0)
-
+    
 
     for i in range(len(platforms)):
         try:

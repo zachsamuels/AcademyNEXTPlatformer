@@ -20,6 +20,9 @@ class Character(pygame.sprite.Sprite):
 		self.gravity = 9.8
 		self.platforms = platforms
 		self.clock = pygame.time.Clock()
+		self.jumping = False
+		self.jump = 10
+		self.can_jump = False
 
 	def move(self, x, y):
 		self.x += x
@@ -27,18 +30,32 @@ class Character(pygame.sprite.Sprite):
 
 	def update(self):
 		self.rect.x += self.x
+		if self.jumping:
+			if self.jump >= 0:
+				self.rect.y -= (self.jump * abs(self.jump)) * 0.5
+				self.jump -= 1
+			else: 
+				self.jump = 10
+				self.jumping = False
+
 		if not any([pygame.sprite.collide_rect(self, platform) for platform in self.platforms]):
 			self.rect.y += self.y + self.gravity
+			self.can_jump = False
 		else:
 			for platform in self.platforms:
 				if pygame.sprite.collide_rect(self, platform):
-					if self.rect.midbottom[1] > platform.rect.center[1]:
-						self.rect.y += self.y + self.gravity			
+					if self.rect.bottom > platform.rect.bottom:
+						self.rect.y += self.y + self.gravity	
+						self.can_jump = False		
 					else:
 						self.rect.y += self.y
+						self.jumping = False
+						self.can_jump = True
 		self.move_left()
+
+		
 	def move_left(self):
-        #moves the rectanlge to the left and updates the rect variable
+		#moves the rectanlge to the left and updates the rect variable
 		speed = .05
 		clock = pygame.time.Clock()
 		left = -clock.tick(60)*speed
