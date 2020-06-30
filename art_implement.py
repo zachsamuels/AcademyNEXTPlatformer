@@ -34,13 +34,13 @@ Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack'
 
 Run_left = []
 Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
-Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
-Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
-Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
-Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
-Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
-Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
-Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
+Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run1.png')), True, False))
+Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run3.png')), True, False))
+Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run4.png')), True, False))
+Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png')), True, False))
+Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run6.png')), True, False))
+Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run7.png')), True, False))
+Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run8.png')), True, False))
 
 MidAir = []
 MidAir.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','mid_air1.gif')))
