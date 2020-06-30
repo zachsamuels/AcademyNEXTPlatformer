@@ -1,6 +1,7 @@
 import pygame
 import os
 import sys
+from bullet import Bullet
 
 class Character(pygame.sprite.Sprite):
 	'''
@@ -11,11 +12,14 @@ class Character(pygame.sprite.Sprite):
 		pygame.sprite.Sprite.__init__(self)
 		image = pygame.image.load(os.path.join('images', 'character.png'))
 		self.image = pygame.transform.scale(image, (50,50))
+		self.width, self.height = 50, 50
 		self.rect = self.image.get_rect()
+		self.rect.x += 50
 		self.x = 0
 		self.y = 0
 		self.gravity = 9.8
 		self.platforms = platforms
+		self.clock = pygame.time.Clock()
 
 	def move(self, x, y):
 		self.x += x
@@ -27,6 +31,16 @@ class Character(pygame.sprite.Sprite):
 			self.rect.y += self.y + self.gravity
 		else:
 			self.rect.y += self.y
+		self.move_left()
+	def move_left(self):
+        #moves the rectanlge to the left and updates the rect variable
+		speed = .05
+		clock = pygame.time.Clock()
+		left = -clock.tick(60)*speed
+		self.rect.x = self.rect.x + left
+
+	def shoot(self):
+		return Bullet(self.rect.x, self.rect.y, 1)
 
 
 

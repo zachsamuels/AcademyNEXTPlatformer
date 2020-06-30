@@ -1,5 +1,6 @@
 import pygame
 import random
+import sys
 from generator import Generator
 from character import Character
 from platformclass import Platform
@@ -13,6 +14,7 @@ running = True
 #create a list of things to call move function on...
 #all platforms should be moved by a set amount left every time the game loop continues
 platforms = []
+bullets = []
 
 #create an instance of the Generator class to create platforms and enemies
 #given the width of the screen
@@ -43,6 +45,8 @@ while running:
                 character.move(10, 0)
             elif event.key == ord('w'):
                 print("jump")
+            elif event.key == ord('s'):
+                bullets.append(character.shoot())
         if event.type is pygame.KEYUP:
             if event.key == ord('a'):
                 character.move(10, 0)
@@ -57,25 +61,31 @@ while running:
                 i -= 1
         except:
             pass
-
+    for bullet in bullets:
+        bullet.move()
 
     SCREEN.fill((255,255,255))
     character.update()
     characters.draw(SCREEN)
 
 
-    #charecter collision
-
+    #charecter collision with bottom and left bound
+    if character.rect.y > HEIGHT:
+        sys.exit()
+    if character.rect.x < 0:
+        sys.exit()
     #generate new platforms
     counter += 1
     if (counter % new_platform_mod == 0):
         platforms.append(GENERATOR.add_platform(last_platform_height))
-        new_platform_mod = random.randint(200,450)
+        new_platform_mod = random.randint(150,300)
         counter = 0
 
     #blit platforms
     for o in platforms:
         SCREEN.blit(o.image, o.rect)
+    for b in bullets:
+        SCREEN.blit(b.image, b.rect)
     SCREEN.blit(character.image, character.rect)
 
 
