@@ -68,21 +68,23 @@ while running:
         bullet.move()
     for enemy in enemies:
         enemy.move()
-        if bullet_counter % 25 == 0:
+        if bullet_counter % 35 == 0:
             bullets.append(enemy.shoot())
-
     SCREEN.fill((255,255,255))
     character.update()
     characters.draw(SCREEN)
     for i in range(len(enemies)):
-        if any([pygame.sprite.collide_rect(enemies[i], bullet) for bullet in bullets]):
-            enemies.remove(enemies[i])
-            i -=1
-    #charecter collision with bottom and left bound
-    # if character.rect.y > HEIGHT:
-    #     sys.exit()
-    # if character.rect.x < 0:
-    #     sys.exit()
+        try:
+            if any([pygame.sprite.collide_rect(enemies[i], bullet) for bullet in bullets]):
+                enemies.remove(enemies[i])
+                i -=1
+        except:
+            pass
+    # charecter collision with bottom and left bound
+    if character.rect.y > HEIGHT:
+        sys.exit()
+    if character.rect.x < 0:
+        sys.exit()
     #generate new platforms
     counter += 1
     if (counter % new_platform_mod == 0):
@@ -90,7 +92,7 @@ while running:
         last_platform_height = plat.rect.y
         platforms.append(plat)
         new_platform_mod = random.randint(150,300)
-        if random.randint(1,1) == 1:
+        if random.randint(1,2) == 1:
             print(plat.rect.x)
             enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
         counter = 0

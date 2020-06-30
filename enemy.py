@@ -16,7 +16,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.rect.move(x, y)
 
     def shoot(self):
-        return Bullet(self.rect.x-15, self.rect.y, -1)
+        return Bullet(self.rect.x-60, self.rect.y, -1)
     def move(self):
         #moves the rectanlge to the left and updates the rect variable
         speed = .005
