@@ -1,6 +1,7 @@
 import pygame
 import os
 import sys
+from bullet import Bullet
 
 class Character(pygame.sprite.Sprite):
 	'''
@@ -37,6 +38,9 @@ class Character(pygame.sprite.Sprite):
 		clock = pygame.time.Clock()
 		left = -clock.tick(60)*speed
 		self.rect.x = self.rect.x + left
+
+	def shoot(self):
+		return Bullet(self.rect.x, self.rect.y, 1)
 
 
 
