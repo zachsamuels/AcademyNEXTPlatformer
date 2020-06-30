@@ -65,14 +65,16 @@ while running:
     characters.draw(SCREEN)
 
 
-    #charecter collision
+    #charecter collision with bottom and left bound
     if character.rect.y > HEIGHT:
+        sys.exit()
+    if character.rect.x < 0:
         sys.exit()
     #generate new platforms
     counter += 1
     if (counter % new_platform_mod == 0):
         platforms.append(GENERATOR.add_platform(last_platform_height))
-        new_platform_mod = random.randint(200,450)
+        new_platform_mod = random.randint(150,300)
         counter = 0
 
     #blit platforms
