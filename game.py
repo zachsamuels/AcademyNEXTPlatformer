@@ -16,6 +16,7 @@ running = True
 #all platforms should be moved by a set amount left every time the game loop continues
 platforms = []
 bullets = []
+enemies = []
 
 #create an instance of the Generator class to create platforms and enemies
 #given the width of the screen
@@ -25,7 +26,7 @@ GENERATOR = Generator(WIDTH, HEIGHT, PLATFORM_WIDTH, PLATFORM_HEIGHT)
 #add basic platforms
 platforms.append(Platform(0, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
 platforms.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
-character = Character(platforms)
+character = Character(platforms, bullets)
 characters = pygame.sprite.Group()
 characters.add(character)
 
@@ -33,7 +34,7 @@ characters.add(character)
 counter = 0
 last_platform_height = 300
 new_platform_mod = 75
-
+bullet_counter = 0
 
 while running:
     for event in pygame.event.get():
@@ -54,24 +55,29 @@ while running:
                 character.move(10, 0)
             elif event.key == ord('d'):
                 character.move(-10, 0)
-    
 
+    bullet_counter += 1
     for i in range(len(platforms)):
         try:
             if platforms[i].move():
                 platforms.remove(platforms[i])
                 i -= 1
-            bullets.append(platforms[i].shoot())
         except:
             pass
     for bullet in bullets:
         bullet.move()
+    for enemy in enemies:
+        enemy.move()
+        if bullet_counter % 25 == 0:
+            bullets.append(enemy.shoot())
 
     SCREEN.fill((255,255,255))
     character.update()
     characters.draw(SCREEN)
-
-
+    for i in range(len(enemies)):
+        if any([pygame.sprite.collide_rect(enemies[i], bullet) for bullet in bullets]):
+            enemies.remove(enemies[i])
+            i -=1
     #charecter collision with bottom and left bound
     # if character.rect.y > HEIGHT:
     #     sys.exit()
@@ -84,9 +90,9 @@ while running:
         last_platform_height = plat.rect.y
         platforms.append(plat)
         new_platform_mod = random.randint(150,300)
-        if random.randint(1,3) == 1:
+        if random.randint(1,1) == 1:
             print(plat.rect.x)
-            platforms.append(Enemy(plat.rect.x+100, plat.rect.y-50))
+            enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
         counter = 0
 
     #blit platforms
@@ -94,6 +100,8 @@ while running:
         SCREEN.blit(o.image, o.rect)
     for b in bullets:
         SCREEN.blit(b.image, b.rect)
+    for e in enemies:
+        SCREEN.blit(e.image, e.rect)
     SCREEN.blit(character.image, character.rect)
 
 

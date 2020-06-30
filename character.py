@@ -8,7 +8,7 @@ class Character(pygame.sprite.Sprite):
 	Character class that handles movement and user input
 	'''
 
-	def __init__(self, platforms):
+	def __init__(self, platforms, bullets):
 		pygame.sprite.Sprite.__init__(self)
 		image = pygame.image.load(os.path.join('images', 'character.png'))
 		self.image = pygame.transform.scale(image, (50,50))
@@ -19,6 +19,7 @@ class Character(pygame.sprite.Sprite):
 		self.y = 0
 		self.gravity = 9.8
 		self.platforms = platforms
+		self.bullets = bullets
 		self.clock = pygame.time.Clock()
 		self.jumping = False
 		self.jump = 10
@@ -34,7 +35,7 @@ class Character(pygame.sprite.Sprite):
 			if self.jump >= 0:
 				self.rect.y -= (self.jump * abs(self.jump)) * 0.5
 				self.jump -= 1
-			else: 
+			else:
 				self.jump = 10
 				self.jumping = False
 
@@ -45,15 +46,17 @@ class Character(pygame.sprite.Sprite):
 			for platform in self.platforms:
 				if pygame.sprite.collide_rect(self, platform):
 					if self.rect.bottom > platform.rect.bottom:
-						self.rect.y += self.y + self.gravity	
-						self.can_jump = False		
+						self.rect.y += self.y + self.gravity
+						self.can_jump = False
 					else:
 						self.rect.y += self.y
 						self.jumping = False
 						self.can_jump = True
 		self.move_left()
+		if any([pygame.sprite.collide_rect(self, bullet) for bullet in self.bullets]):
+			sys.exit()
 
-		
+
 	def move_left(self):
 		#moves the rectanlge to the left and updates the rect variable
 		speed = .05
