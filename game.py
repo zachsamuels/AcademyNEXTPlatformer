@@ -90,6 +90,8 @@ while running:
                 enemies.remove(enemies[i])
                 score += 25
                 i -=1
+            elif enemies[i].rect.x < 0:
+                enemies.remove(enemies[i])
         except:
             pass
     # charecter collision with bottom and left bound
@@ -103,7 +105,7 @@ while running:
         plat = GENERATOR.add_platform(last_platform_height)
         last_platform_height = plat.rect.y
         platforms.append(plat)
-        new_platform_mod = random.randint(50,125)
+        new_platform_mod = random.randint(75,125)
         if random.randint(1,2) == 1:
             print(plat.rect.x)
             enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
