@@ -17,7 +17,7 @@ class Platform(pygame.sprite.Sprite):
 
     def move(self):
         #moves the rectanlge to the left and updates the rect variable
-        speed = .1
+        speed = .17
         clock = pygame.time.Clock()
         left = -clock.tick(200)*speed
         self.x += left

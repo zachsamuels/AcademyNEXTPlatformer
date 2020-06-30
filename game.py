@@ -105,7 +105,7 @@ while running:
         plat = GENERATOR.add_platform(last_platform_height)
         last_platform_height = plat.rect.y
         platforms.append(plat)
-        new_platform_mod = random.randint(75,125)
+        new_platform_mod = random.randint(200,400)
         if random.randint(1,2) == 1:
             print(plat.rect.x)
             enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
