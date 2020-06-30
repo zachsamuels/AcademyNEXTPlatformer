@@ -60,7 +60,6 @@ idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Cha
 idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle11.gif')))
 idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle12.gif')))
 
-
 # in_air = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\Art\Jungle Asset Pack\Character\sprites\mid-air.gif')
 
 pygame.display.init()
@@ -161,7 +160,7 @@ while game :
     # if run_bool == True:
         # runCount = runCount += 1
 
-    #for i in range(X // 200 - 1) :
+    # for i in range(X // 200 - 1) :
         
         #display_surface.blit(further_background, (X_pos, 0.5 * Y))
         #display_surface.blit(background, (X_pos, 0.5 * Y)) 
