@@ -59,7 +59,7 @@ class Character(pygame.sprite.Sprite):
 
 	def move_left(self):
 		#moves the rectanlge to the left and updates the rect variable
-		speed = .05
+		speed = .0589
 		clock = pygame.time.Clock()
 		left = -clock.tick(60)*speed
 		self.rect.x = self.rect.x + left

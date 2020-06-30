@@ -19,7 +19,7 @@ class Enemy(pygame.sprite.Sprite):
         return Bullet(self.rect.x-60, self.rect.y, -1)
     def move(self):
         #moves the rectanlge to the left and updates the rect variable
-        speed = .005
+        speed = .1
         clock = pygame.time.Clock()
         left = -clock.tick(60)*speed
         self.rect.x = self.rect.x + left

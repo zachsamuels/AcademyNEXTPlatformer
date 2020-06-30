@@ -33,8 +33,10 @@ characters.add(character)
 #loop vars
 counter = 0
 last_platform_height = 300
-new_platform_mod = 75
+new_platform_mod = 15
 bullet_counter = 0
+score = 0
+bullet_cooldown = 25
 
 while running:
     for event in pygame.event.get():
@@ -49,7 +51,9 @@ while running:
                 if not character.jumping and character.can_jump:
                     character.jumping = True
             elif event.key == ord('s'):
-                bullets.append(character.shoot())
+                if bullet_cooldown > 25:
+                    bullets.append(character.shoot())
+                    bullet_cooldown = 0
         if event.type is pygame.KEYUP:
             if event.key == ord('a'):
                 character.move(10, 0)
@@ -57,6 +61,7 @@ while running:
                 character.move(-10, 0)
 
     bullet_counter += 1
+    bullet_cooldown += 1
     for i in range(len(platforms)):
         try:
             if platforms[i].move():
@@ -64,11 +69,17 @@ while running:
                 i -= 1
         except:
             pass
-    for bullet in bullets:
-        bullet.move()
+    for i in range(len(bullets)):
+        try:
+            bullets[i].move()
+            if bullets[i].rect.x > WIDTH or bullets[i].rect.x < 0:
+                bullets.remove(bullets[i])
+                i -= 1
+        except:
+            pass
     for enemy in enemies:
         enemy.move()
-        if bullet_counter % 35 == 0:
+        if bullet_counter % 50 == 0:
             bullets.append(enemy.shoot())
     SCREEN.fill((255,255,255))
     character.update()
@@ -77,6 +88,7 @@ while running:
         try:
             if any([pygame.sprite.collide_rect(enemies[i], bullet) for bullet in bullets]):
                 enemies.remove(enemies[i])
+                score += 25
                 i -=1
         except:
             pass
@@ -91,11 +103,13 @@ while running:
         plat = GENERATOR.add_platform(last_platform_height)
         last_platform_height = plat.rect.y
         platforms.append(plat)
-        new_platform_mod = random.randint(150,300)
+        new_platform_mod = random.randint(50,125)
         if random.randint(1,2) == 1:
             print(plat.rect.x)
             enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
         counter = 0
+        score += 50
+        print(score)
 
     #blit platforms
     for o in platforms:
