@@ -4,6 +4,7 @@ import sys
 from generator import Generator
 from character import Character
 from platformclass import Platform
+from enemy import Enemy
 
 #init pygame and create screen
 pygame.init()
@@ -30,8 +31,8 @@ characters.add(character)
 
 #loop vars
 counter = 0
-last_platform_height = PLATFORM_HEIGHT
-new_platform_mod = 250
+last_platform_height = 300
+new_platform_mod = 75
 
 
 while running:
@@ -59,6 +60,7 @@ while running:
             if platforms[i].move():
                 platforms.remove(platforms[i])
                 i -= 1
+            bullets.append(platforms[i].shoot())
         except:
             pass
     for bullet in bullets:
@@ -70,15 +72,20 @@ while running:
 
 
     #charecter collision with bottom and left bound
-    if character.rect.y > HEIGHT:
-        sys.exit()
-    if character.rect.x < 0:
-        sys.exit()
+    # if character.rect.y > HEIGHT:
+    #     sys.exit()
+    # if character.rect.x < 0:
+    #     sys.exit()
     #generate new platforms
     counter += 1
     if (counter % new_platform_mod == 0):
-        platforms.append(GENERATOR.add_platform(last_platform_height))
+        plat = GENERATOR.add_platform(last_platform_height)
+        last_platform_height = plat.rect.y
+        platforms.append(plat)
         new_platform_mod = random.randint(150,300)
+        if random.randint(1,3) == 1:
+            print(plat.rect.x)
+            platforms.append(Enemy(plat.rect.x+100, plat.rect.y-50))
         counter = 0
 
     #blit platforms
