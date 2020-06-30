@@ -16,6 +16,11 @@ plat_top_right = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNE
 plat_bottom_left = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\bottom_left.png')
 plat_bottom_middle = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\bottom_middle.png')
 plat_bottom_right = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\bottom_right.png')
+platform = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Multi_Platformer_Tileset_v2\GrassLand\Terrain\platform.png')
+
+skeleton = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\2D Pixel Dungeon Asset Pack\character and tileset\skeleton.png')
+cleric = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\2D Pixel Dungeon Asset Pack\character and tileset\cleric.png')
+knight = pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\2D Pixel Dungeon Asset Pack\character and tileset\knight.png')
 
 Run_right = []
 Run_right.append(pygame.image.load(r'C:\Users\Student\Documents\GitHub\AcademyNEXTPlatformer\sprite_art\Jungle Asset Pack\Character\sprites\run0.png'))
@@ -63,8 +68,8 @@ pygame.display.set_mode()
 
 sky = (173, 216, 230) 
   
-X = 785
-Y = 400
+X = 820
+Y = 480
 X_pos = 0
 left = False
 right = False
@@ -79,16 +84,21 @@ def redrawGameWindow():
     global chillCount
 
     display_surface.fill(sky)
-    display_surface.blit(further_background, (0, 0.5 * Y))
-    display_surface.blit(background, (0, 0.5 * Y)) 
-    display_surface.blit(ground_tiles, (0, 0.5 * Y))
+    display_surface.blit(further_background, (0, 0))
+    display_surface.blit(background, (0, 0)) 
+    display_surface.blit(ground_tiles, (0, 80))
 
-    display_surface.blit(plat_top_left, (400, 0.75 * Y))
-    display_surface.blit(plat_top_middle, (425, 0.75 * Y))
-    display_surface.blit(plat_top_right, (450, 0.75 * Y))
-    display_surface.blit(plat_bottom_left, (400, 0.75 * Y + 25))
-    display_surface.blit(plat_bottom_middle, (425, 0.75 * Y + 25))
-    display_surface.blit(plat_bottom_right, (450, 0.75 * Y + 25))
+    display_surface.blit(plat_top_left, (350, 0.75 * Y - 50))
+    display_surface.blit(plat_top_middle, (375, 0.75 * Y - 50))
+    display_surface.blit(plat_top_right, (400, 0.75 * Y - 50))
+    display_surface.blit(plat_bottom_left, (350, 0.75 * Y - 25))
+    display_surface.blit(plat_bottom_middle, (375, 0.75 * Y - 25))
+    display_surface.blit(plat_bottom_right, (400, 0.75 * Y - 25))
+    display_surface.blit(platform, (450, 0.75 * Y - 100))
+
+    display_surface.blit(skeleton, (450, 0.75 * Y - 125))
+    display_surface.blit(cleric, (480, 0.75 * Y - 125))
+    display_surface.blit(knight, (510, 0.75 * Y - 125))
 
     if runCount + 1 >= 24:
         runCount = 0
@@ -100,16 +110,16 @@ def redrawGameWindow():
         chillCount = 0
 
     if not vspeed == 0:
-        display_surface.blit(MidAir[airTicks//3], (40,40))
+        display_surface.blit(MidAir[airTicks//3], (40,325))
         airTicks += 1
     elif left:
-        display_surface.blit(Run_left[runCount//3], (40,40))
+        display_surface.blit(Run_left[runCount//3], (40,350))
         runCount += 1
     elif right:
-        display_surface.blit(Run_right[runCount//3], (40,40))
+        display_surface.blit(Run_right[runCount//3], (40,350))
         runCount += 1
     else:
-        display_surface.blit(idle[chillCount//3], (40,40))
+        display_surface.blit(idle[chillCount//3], (40,350))
         chillCount += 1
 
     pygame.display.update()  
