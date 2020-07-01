@@ -12,7 +12,7 @@ import os
 pygame.init()
 WIDTH, HEIGHT = 600, 600
 SCREEN = pygame.display.set_mode([WIDTH, HEIGHT])
-running = True
+
 
 #create a list of things to call move function on...
 #all platforms should be moved by a set amount left every time the game loop continues
@@ -33,11 +33,14 @@ sky = (173, 216, 230)
 
 #add basic platforms
 def main(genomes, config):
+    running = True
     platforms = []
     bullets = []
     
     platforms.append(Platform(0, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
+    platforms.append(Platform(600, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
+    platforms.append(Platform(800, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
 
     nets = []
     ge = []
@@ -62,6 +65,14 @@ def main(genomes, config):
     clock = pygame.time.Clock()
 
     while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+        
+        if not len(characters):
+            running = False
+            break
 
         tick = clock.tick(30)
         for i in range(len(platforms)):
@@ -87,22 +98,60 @@ def main(genomes, config):
             new_platform_mod = random.randint(50,80)
             counter = 0
             score += 1
-            for g in ge:
-                g.fitness += 5
             print(score)
 
         #blit platforms
         for o in platforms:
             SCREEN.blit(o.image, o.rect)
         
+
         for i, character in enumerate(characters):
+            ge[i].fitness += character.rect.x / 200
+            p_index = 0
+            for p in platforms:
+                if character.rect.x > p.rect.left:
+                    p_index += 1
+                    ge[i].fitness += .1
+                else:
+                    break
+
+            ge[i].fitness += .01
+
+            output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, 600 - character.rect.x))[0]
+
+            if output < .25:
+                pass
+            elif output > .25 and output < .75:
+                character.move(10, 0)
+            else:
+                if not character.jumping and character.can_jump:
+                    character.jumping = True
+
+            
             character.update()
             
-            if character.rect.y > HEIGHT or character.rect.x < 0:
-                ge[i].fitness -=1
-                characters.pop(i)
+            if character.rect.y > HEIGHT:
+                ge[i].fitness -= 1
+                char = characters.pop(i)
                 nets.pop(i)
                 ge.pop(i)
+                characterz.remove(char)
+
+
+            if character.rect.x > 600:
+                ge[i].fitness -=.1
+                char = characters.pop(i)
+                nets.pop(i)
+                ge.pop(i)
+                characterz.remove(char)
+
+
+            if character.rect.x == 0:
+                ge[i].fitness -=5
+                char = characters.pop(i)
+                nets.pop(i)
+                ge.pop(i)
+                characterz.remove(char)
 
             SCREEN.blit(character.image, character.rect)
 
@@ -110,14 +159,14 @@ def main(genomes, config):
         pygame.display.flip()
 
 def run(config_path):
-    config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultSpeciesSet, config_path)
+    config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, config_path)
     p = neat.Population(config)
 
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
 
-    winner = p.run(main, 50)
+    winner = p.run(main, 1000)
 
 if __name__ == "__main__":
     local_dir = os.path.dirname(__file__)
