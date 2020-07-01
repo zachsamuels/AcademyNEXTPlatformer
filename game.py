@@ -62,10 +62,10 @@ while running:
             elif event.key == ord('w'):
                 if not character.jumping and character.can_jump:
                     character.jumping = True
-            elif event.key == ord('s'):
-                if bullet_cooldown > 25:
-                    bullets.append(character.shoot())
-                    bullet_cooldown = 0
+            # elif event.key == ord('s'):
+            #     if bullet_cooldown > 25:
+            #         bullets.append(character.shoot())
+            #         bullet_cooldown = 0
         if event.type is pygame.KEYUP:
             if event.key == ord('a'):
                 character.move(10, 0)
@@ -82,34 +82,34 @@ while running:
                 i -= 1
         except:
             pass
-    for i in range(len(bullets)):
-        try:
-            bullets[i].move()
-            if bullets[i].rect.x > WIDTH or bullets[i].rect.x < 0:
-                bullets.remove(bullets[i])
-                i -= 1
-        except:
-            pass
-    for enemy in enemies:
-        enemy.move(tick)
-        if bullet_counter % 100 == 0:
-            bullets.append(enemy.shoot())
+    # for i in range(len(bullets)):
+    #     try:
+    #         bullets[i].move()
+    #         if bullets[i].rect.x > WIDTH or bullets[i].rect.x < 0:
+    #             bullets.remove(bullets[i])
+    #             i -= 1
+    #     except:
+    #         pass
+    # for enemy in enemies:
+    #     enemy.move(tick)
+    #     if bullet_counter % 100 == 0:
+    #         bullets.append(enemy.shoot())
     SCREEN.fill(sky)
     SCREEN.blit(further_background, (0, Y - 520))
     SCREEN.blit(background, (0, Y - 460))
     SCREEN.blit(ground_tiles, (0, Y - 400))
     character.update(tick)
     characters.draw(SCREEN)
-    for i in range(len(enemies)):
-        try:
-            if any([pygame.sprite.collide_rect(enemies[i], bullet) for bullet in bullets]):
-                enemies.remove(enemies[i])
-                score += 25
-                i -=1
-            elif enemies[i].rect.x < 0:
-                enemies.remove(enemies[i])
-        except:
-            pass
+    # for i in range(len(enemies)):
+    #     try:
+    #         if any([pygame.sprite.collide_rect(enemies[i], bullet) for bullet in bullets]):
+    #             enemies.remove(enemies[i])
+    #             score += 25
+    #             i -=1
+    #         elif enemies[i].rect.x < 0:
+    #             enemies.remove(enemies[i])
+    #     except:
+    #         pass
     # charecter collision with bottom and left bound
     if character.rect.y > HEIGHT:
         sys.exit()
@@ -121,7 +121,7 @@ while running:
         plat = GENERATOR.add_platform(last_platform_height)
         last_platform_height = plat.rect.y
         platforms.append(plat)
-        new_platform_mod = random.randint(25,40)
+        new_platform_mod = random.randint(50,80)
         if random.randint(1,2) == 1:
             print(plat.rect.x)
             enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
@@ -134,8 +134,8 @@ while running:
         SCREEN.blit(o.image, o.rect)
     for b in bullets:
         SCREEN.blit(b.image, b.rect)
-    for e in enemies:
-        SCREEN.blit(e.image, e.rect)
+    # for e in enemies:
+    #     SCREEN.blit(e.image, e.rect)
     SCREEN.blit(character.image, character.rect)
 
 
