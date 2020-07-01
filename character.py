@@ -14,7 +14,8 @@ class Character(pygame.sprite.Sprite):
 		self.image = pygame.transform.scale(image, (50,50))
 		self.width, self.height = 50, 50
 		self.rect = self.image.get_rect()
-		self.rect.x += 50
+		self.rect.x += 100
+		self.rect.y = 200
 		self.x = 0
 		self.y = 0
 		self.gravity = 9.8
@@ -29,7 +30,7 @@ class Character(pygame.sprite.Sprite):
 		self.x += x
 		self.y += y
 
-	def update(self):
+	def update(self, tick):
 		self.rect.x += self.x
 		if self.jumping:
 			if self.jump >= 0:
@@ -52,16 +53,15 @@ class Character(pygame.sprite.Sprite):
 						self.rect.y += self.y
 						self.jumping = False
 						self.can_jump = True
-		self.move_left()
+		self.move_left(tick)
 		if any([pygame.sprite.collide_rect(self, bullet) for bullet in self.bullets]):
 			sys.exit()
 
 
-	def move_left(self):
+	def move_left(self, tick):
 		#moves the rectanlge to the left and updates the rect variable
-		speed = .0589
-		clock = pygame.time.Clock()
-		left = -clock.tick(200)*speed
+		speed = .15
+		left = -speed * tick
 		self.rect.x = self.rect.x + left
 
 	def shoot(self):

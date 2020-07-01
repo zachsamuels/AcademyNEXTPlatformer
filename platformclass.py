@@ -17,11 +17,10 @@ class Platform(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect = self.rect.move(self.x, self.y)
 
-    def move(self):
+    def move(self, tick):
         #moves the rectanlge to the left and updates the rect variable
         speed = .17
-        clock = pygame.time.Clock()
-        left = -clock.tick(200)*speed
+        left = -tick*speed
         self.x += left
         if (self.x+left+self.width < 0):
             return True

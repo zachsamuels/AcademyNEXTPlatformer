@@ -17,11 +17,10 @@ class Enemy(pygame.sprite.Sprite):
 
     def shoot(self):
         return Bullet(self.rect.x-60, self.rect.y, -1)
-    def move(self):
+    def move(self, tick):
         #moves the rectanlge to the left and updates the rect variable
-        speed = .1
-        clock = pygame.time.Clock()
-        left = -clock.tick(200)*speed
+        speed = .17
+        left = -tick*speed
         self.rect.x = self.rect.x + left
         if (self.rect.x+left+self.width < 0):
             return True

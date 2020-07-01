@@ -30,7 +30,7 @@ Y = 600
 ground_tiles = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_3.png'))
 background = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_2.png'))
 further_background = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_1.png'))
-sky = (173, 216, 230) 
+sky = (173, 216, 230)
 
 #add basic platforms
 platforms.append(Platform(0, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
@@ -46,11 +46,12 @@ new_platform_mod = 15
 bullet_counter = 0
 score = 0
 bullet_cooldown = 25
+clock = pygame.time.Clock()
 
 while running:
-    
+
     for event in pygame.event.get():
-        
+
         if event.type == pygame.QUIT:
             running = False
         if event.type is pygame.KEYDOWN:
@@ -73,9 +74,10 @@ while running:
 
     bullet_counter += 1
     bullet_cooldown += 1
+    tick = clock.tick(30)
     for i in range(len(platforms)):
         try:
-            if platforms[i].move():
+            if platforms[i].move(tick):
                 platforms.remove(platforms[i])
                 i -= 1
         except:
@@ -89,14 +91,14 @@ while running:
         except:
             pass
     for enemy in enemies:
-        enemy.move()
-        if bullet_counter % 50 == 0:
+        enemy.move(tick)
+        if bullet_counter % 100 == 0:
             bullets.append(enemy.shoot())
     SCREEN.fill(sky)
     SCREEN.blit(further_background, (0, Y - 520))
-    SCREEN.blit(background, (0, Y - 460)) 
+    SCREEN.blit(background, (0, Y - 460))
     SCREEN.blit(ground_tiles, (0, Y - 400))
-    character.update()
+    character.update(tick)
     characters.draw(SCREEN)
     for i in range(len(enemies)):
         try:
@@ -119,7 +121,7 @@ while running:
         plat = GENERATOR.add_platform(last_platform_height)
         last_platform_height = plat.rect.y
         platforms.append(plat)
-        new_platform_mod = random.randint(200,400)
+        new_platform_mod = random.randint(25,40)
         if random.randint(1,2) == 1:
             print(plat.rect.x)
             enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
