@@ -7,11 +7,12 @@ from platformclass import Platform
 from enemy import Enemy
 import neat
 import os
+import numpy as np
 
 #init pygame and create screen
 pygame.init()
 WIDTH, HEIGHT = 600, 600
-SCREEN = pygame.display.set_mode([WIDTH, HEIGHT])
+SCREEN = pygame.display.set_mode([2000, HEIGHT])
 
 
 #create a list of things to call move function on...
@@ -39,19 +40,18 @@ def main(genomes, config):
     
     platforms.append(Platform(0, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
-    platforms.append(Platform(600, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
-    platforms.append(Platform(800, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
+    #platforms.append(Platform(600, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
+    #platforms.append(Platform(800, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
 
     nets = []
     ge = []
     characters = []
-    characterz = pygame.sprite.Group()
+    
     for g in genomes:
         net = neat.nn.FeedForwardNetwork.create(g[1], config)
         nets.append(net)
         char = Character(platforms, bullets)
         characters.append(char)
-        characterz.add(char)
         g[1].fitness = 0
         ge.append(g[1])
 
@@ -95,7 +95,7 @@ def main(genomes, config):
             plat = GENERATOR.add_platform(last_platform_height)
             last_platform_height = plat.rect.y
             platforms.append(plat)
-            new_platform_mod = random.randint(50,80)
+            new_platform_mod = random.randint(100, 150)
             counter = 0
             score += 1
             print(score)
@@ -106,18 +106,22 @@ def main(genomes, config):
         
 
         for i, character in enumerate(characters):
-            ge[i].fitness += character.rect.x / 200
+            #ge[i].fitness += character.rect.x / 200
             p_index = 0
             for p in platforms:
                 if character.rect.x > p.rect.left:
                     p_index += 1
-                    ge[i].fitness += .1
+                    ge[i].fitness += 1
                 else:
                     break
 
             ge[i].fitness += .01
 
-            output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, 600 - character.rect.x))[0]
+            try:
+                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, 600 - character.rect.x))[0]
+            except:
+                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 600 - character.rect.x))[0]
+            
 
             if output < .25:
                 pass
@@ -128,34 +132,27 @@ def main(genomes, config):
                     character.jumping = True
 
             
-            character.update()
+            character.update(tick)
             
             if character.rect.y > HEIGHT:
                 ge[i].fitness -= 1
                 char = characters.pop(i)
                 nets.pop(i)
                 ge.pop(i)
-                characterz.remove(char)
+                continue
 
-
-            if character.rect.x > 600:
-                ge[i].fitness -=.1
-                char = characters.pop(i)
-                nets.pop(i)
-                ge.pop(i)
-                characterz.remove(char)
-
+            if character.rect.x > 550:
+                character.rect.x = 600 - character.width
 
             if character.rect.x == 0:
                 ge[i].fitness -=5
                 char = characters.pop(i)
                 nets.pop(i)
                 ge.pop(i)
-                characterz.remove(char)
+                continue
 
             SCREEN.blit(character.image, character.rect)
-
-        characterz.draw(SCREEN)
+        
         pygame.display.flip()
 
 def run(config_path):
