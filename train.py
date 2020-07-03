@@ -37,15 +37,18 @@ def main(genomes, config):
     running = True
     platforms = []
     bullets = []
+    enemies = []
 
     platforms.append(Platform(0, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(600, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(800, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
+    platforms.append(Enemy(400, 400))
 
     nets = []
     ge = []
     characters = []
+    bullet_counter = 0
 
     for g in genomes:
         net = neat.nn.FeedForwardNetwork.create(g[1], config)
@@ -82,7 +85,10 @@ def main(genomes, config):
                     i -= 1
             except:
                 pass
-
+        for enemy in enemies:
+            enemy.move(tick)
+            if bullet_counter % 100 == 0:
+                bullets.append(enemy.shoot())
         SCREEN.fill(sky)
         SCREEN.blit(further_background, (0, Y - 520))
         SCREEN.blit(background, (0, Y - 460))
@@ -95,16 +101,42 @@ def main(genomes, config):
             plat = GENERATOR.add_platform(last_platform_height)
             last_platform_height = plat.rect.y
             platforms.append(plat)
-            new_platform_mod = random.randint(100, 150)
+            new_platform_mod = random.randint(50, 100)
             counter = 0
             score += 1
             print(score)
+            if random.randint(1,1) == 1:
+                print('new enemy')
+                enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
 
         #blit platforms
         for o in platforms:
             SCREEN.blit(o.image, o.rect)
 
-
+        for i in range(len(bullets)):
+            try:
+                bullets[i].move()
+                if bullets[i].rect.x > WIDTH or bullets[i].rect.x < 0:
+                    bullets.remove(bullets[i])
+                    i -= 1
+            except:
+                pass
+        for enemy in enemies:
+            enemy.move(tick)
+            if bullet_counter % 100 == 0:
+                bullets.append(enemy.shoot())
+        for i in range(len(enemies)):
+            try:
+                if any([pygame.sprite.collide_rect(enemies[i], bullet) for bullet in bullets]):
+                    enemies.remove(enemies[i])
+                    score += 25
+                    i -=1
+                elif enemies[i].rect.x < 0:
+                    enemies.remove(enemies[i])
+            except:
+                pass
+        for enemy in enemies:
+            SCREEN.blit(enemy.image, enemy.rect)
         for i, character in enumerate(characters):
             #ge[i].fitness += character.rect.x / 200
             p_index = 0
@@ -132,7 +164,7 @@ def main(genomes, config):
                     character.jumping = True
 
 
-            character.update(tick)
+            ge[i].fitness += character.update(tick)
 
             if character.rect.y > HEIGHT:
                 ge[i].fitness -= 1
