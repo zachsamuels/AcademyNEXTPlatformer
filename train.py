@@ -142,7 +142,7 @@ def main(genomes, config):
                     break
 
             ge[i].fitness += .01
-    
+
             b_index = 0
             for b in bullets:
                 if character.rect.x > b.rect.left:
@@ -160,7 +160,7 @@ def main(genomes, config):
             if output < .25:
                 pass
             elif output > .25 and output < .75:
-                character.move(10, 0)
+                character.move(2.5, 0)
             else:
                 if not character.jumping and character.can_jump:
                     character.jumping = True

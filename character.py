@@ -17,12 +17,12 @@ class Character(pygame.sprite.Sprite):
 		self.rect.x += 50
 		self.x = 0
 		self.y = 0
-		self.gravity = 9.8
+		self.gravity = 4.9
 		self.platforms = platforms
 		self.bullets = bullets
 		self.clock = pygame.time.Clock()
 		self.jumping = False
-		self.jump = 10
+		self.jump = 20
 		self.hit = False
 		self.can_jump = False
 
