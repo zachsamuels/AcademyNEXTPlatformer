@@ -8,6 +8,7 @@ from enemy import Enemy
 import neat
 import os
 import numpy as np
+import pickle
 
 #init pygame and create screen
 pygame.init()
@@ -150,17 +151,33 @@ def main(genomes, config):
                     #ge[i].fitness += 1
                 else:
                     break
+            
+            e_index = 0
+            for e in enemies:
+                if character.rect.x > e.rect.left:
+                    e_index += 1
+                    #ge[i].fitness += 1
+                else:
+                    break
 
             try:
-                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, bullets[b_index].rect.x, bullets[b_index].rect.x, 875 - character.rect.x))[0]
+                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, bullets[b_index].rect.x, bullets[b_index].rect.x, enemies[e_index].rect.x, enemies[e_index].rect.y, 875 - character.rect.x))
             except:
-                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 0, 0, 875 - character.rect.x))[0]
+                try:
+                    output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-2].rect.left, platforms[p_index-2].rect.right, platforms[p_index-2].rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 0, 0, enemies[e_index].rect.x, enemies[e_index].rect.y, 875 - character.rect.x))
+                except:
+                    output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-2].rect.left, platforms[p_index-2].rect.right, platforms[p_index-2].rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 0, 0, 0, 0, 875 - character.rect.x))
 
+            soft = neat.math_util.softmax(output)
+            class_output = np.argmax(((soft / np.max(soft)) == 1).astype(int))
 
-            if output < .25:
+            #print(class_output)
+            if not class_output:
                 pass
-            elif output > .25 and output < .75:
-                character.move(2.5, 0)
+            elif class_output == 1:
+                character.move(10, 0)
+            elif class_output == 2:
+                character.move(-10, 0)
             else:
                 if not character.jumping and character.can_jump:
                     character.jumping = True
@@ -197,6 +214,7 @@ def main(genomes, config):
         pygame.display.flip()
 
 def run(config_path):
+    
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, config_path)
     p = neat.Population(config)
 
@@ -205,6 +223,19 @@ def run(config_path):
     p.add_reporter(stats)
 
     winner = p.run(main, 1000)
+    pickle.dump(winner, open("winner.p", "wb"))
+    '''
+    with open('winner.p', "rb") as f:
+        genome = pickle.load(f)
+
+    # Convert loaded genome into required data structure
+    genomes = [(1, genome)]
+
+    # Call game with only the loaded genome
+    main(genomes, config)
+    '''
+
+
 
 if __name__ == "__main__":
     local_dir = os.path.dirname(__file__)

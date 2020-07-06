@@ -22,7 +22,7 @@ class Character(pygame.sprite.Sprite):
 		self.bullets = bullets
 		self.clock = pygame.time.Clock()
 		self.jumping = False
-		self.jump = 20
+		self.jump = 10
 		self.hit = False
 		self.can_jump = False
 
@@ -32,6 +32,7 @@ class Character(pygame.sprite.Sprite):
 
 	def update(self, tick):
 		self.rect.x += self.x
+		self.x = 0
 		fitness = 0
 		if self.jumping:
 			if self.jump >= 0:
@@ -55,7 +56,7 @@ class Character(pygame.sprite.Sprite):
 						self.jumping = False
 						self.can_jump = True
 						fitness += 2
-		self.move_left(tick)
+		#self.move_left(tick)
 		if any([pygame.sprite.collide_rect(self, bullet) for bullet in self.bullets]):
 			self.hit = True
 		return fitness
@@ -65,7 +66,7 @@ class Character(pygame.sprite.Sprite):
 		speed = .0589
 		#clock = pygame.time.Clock()
 		left = tick*speed
-		self.rect.x = self.rect.x + left
+		self.rect.x = self.rect.x - left
 
 	def shoot(self):
 		return Bullet(self.rect.x, self.rect.y, 1)
