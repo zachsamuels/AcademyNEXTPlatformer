@@ -10,7 +10,7 @@ class Character(pygame.sprite.Sprite):
 
 	def __init__(self, platforms, bullets):
 		pygame.sprite.Sprite.__init__(self)
-		image = pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png')), True, False)
+		image = pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png'))
 		self.image = pygame.transform.scale(image, (50,50))
 		self.width, self.height = 50, 50
 		self.rect = self.image.get_rect()
