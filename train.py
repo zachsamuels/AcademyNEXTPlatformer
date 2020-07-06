@@ -105,7 +105,7 @@ def main(genomes, config):
             counter = 0
             score += 1
             print(score)
-            if random.randint(1,1) == 1:
+            if random.randint(1,3) == 1:
                 print('new enemy')
                 enemies.append(Enemy(plat.rect.x+100, plat.rect.y-50))
 
