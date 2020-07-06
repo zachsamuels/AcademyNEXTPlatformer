@@ -43,7 +43,6 @@ def main(genomes, config):
     platforms.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(600, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(800, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
-    platforms.append(Enemy(400, 400))
 
     nets = []
     ge = []
@@ -97,6 +96,7 @@ def main(genomes, config):
 
         #generate new platforms
         counter += 1
+        bullet_counter += 1
         if (counter % new_platform_mod == 0):
             plat = GENERATOR.add_platform(last_platform_height)
             last_platform_height = plat.rect.y
@@ -112,6 +112,10 @@ def main(genomes, config):
         #blit platforms
         for o in platforms:
             SCREEN.blit(o.image, o.rect)
+        for enemy in enemies:
+            SCREEN.blit(enemy.image, enemy.rect)
+        for bullet in bullets:
+            SCREEN.blit(bullet.image, bullet.rect)
 
         for i in range(len(bullets)):
             try:
@@ -125,18 +129,8 @@ def main(genomes, config):
             enemy.move(tick)
             if bullet_counter % 100 == 0:
                 bullets.append(enemy.shoot())
-        for i in range(len(enemies)):
-            try:
-                if any([pygame.sprite.collide_rect(enemies[i], bullet) for bullet in bullets]):
-                    enemies.remove(enemies[i])
-                    score += 25
-                    i -=1
-                elif enemies[i].rect.x < 0:
-                    enemies.remove(enemies[i])
-            except:
-                pass
-        for enemy in enemies:
-            SCREEN.blit(enemy.image, enemy.rect)
+
+
         for i, character in enumerate(characters):
             #ge[i].fitness += character.rect.x / 200
             p_index = 0
@@ -178,6 +172,12 @@ def main(genomes, config):
 
             if character.rect.x == 0:
                 ge[i].fitness -=5
+                char = characters.pop(i)
+                nets.pop(i)
+                ge.pop(i)
+                continue
+            if character.hit:
+                ge[i].fitness -= 10
                 char = characters.pop(i)
                 nets.pop(i)
                 ge.pop(i)
