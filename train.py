@@ -11,7 +11,7 @@ import numpy as np
 
 #init pygame and create screen
 pygame.init()
-WIDTH, HEIGHT = 1000, 600
+WIDTH, HEIGHT = 875, 600
 SCREEN = pygame.display.set_mode([WIDTH, HEIGHT])
 
 
@@ -42,7 +42,7 @@ def main(genomes, config):
     platforms.append(Platform(0, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(300, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
     platforms.append(Platform(600, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
-    platforms.append(Platform(800, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
+    #platforms.append(Platform(800, 300, PLATFORM_WIDTH, PLATFORM_HEIGHT))
 
     nets = []
     ge = []
@@ -137,16 +137,24 @@ def main(genomes, config):
             for p in platforms:
                 if character.rect.x > p.rect.left:
                     p_index += 1
-                    ge[i].fitness += 1
+                    #ge[i].fitness += 1
                 else:
                     break
 
             ge[i].fitness += .01
+    
+            b_index = 0
+            for b in bullets:
+                if character.rect.x > b.rect.left:
+                    b_index += 1
+                    #ge[i].fitness += 1
+                else:
+                    break
 
             try:
-                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, 600 - character.rect.x))[0]
+                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, bullets[b_index].rect.x, bullets[b_index].rect.x, 875 - character.rect.x))[0]
             except:
-                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 600 - character.rect.x))[0]
+                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 0, 0, 875 - character.rect.x))[0]
 
 
             if output < .25:
@@ -167,8 +175,9 @@ def main(genomes, config):
                 ge.pop(i)
                 continue
 
-            if character.rect.x > 950:
-                character.rect.x = 1000 - character.width
+            if character.rect.x > 825:
+                ge[i].fitness -=.1
+                character.rect.x = 875 - character.width
 
             if character.rect.x == 0:
                 ge[i].fitness -=5
