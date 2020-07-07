@@ -234,7 +234,7 @@ def run(config_path):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(50))
+    p.add_reporter(neat.Checkpointer(5))
 
     winner = p.run(main, 20)
 
