@@ -171,14 +171,27 @@ def main(genomes, config):
 
             #print(class_output)
             if not class_output:
+                character.left_bool = False
+                character.right_bool = True
                 pass
             elif class_output == 1:
                 character.move(10, 0)
+                character.left_bool = False
+                character.right_bool = True
+                character.chillCount = 0
             elif class_output == 2:
                 character.move(-10, 0)
+                character.left_bool = True
+                character.right_bool = False
+                character.chillCount = 0
             else:
                 if not character.jumping and character.can_jump:
                     character.jumping = True
+                    character.chillCount = 0
+                else:
+                    character.left_bool = False
+                    character.right_bool = False
+                    character.runCount = 0
 
 
             ge[i].fitness += character.update(tick)
@@ -208,6 +221,7 @@ def main(genomes, config):
                 ge.pop(i)
                 continue
 
+            character.redrawGameWindow()
             SCREEN.blit(character.image, character.rect)
 
         pygame.display.flip()
