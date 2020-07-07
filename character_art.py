@@ -7,19 +7,19 @@ class Character(pygame.sprite.Sprite):
     '''
     Character class that handles movement and user input
     '''
-    
-
-    sky = (173, 216, 230) 
-
 
     def __init__(self, platforms, bullets):
         pygame.sprite.Sprite.__init__(self)
-        self.image_png = pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png'))
-        self.image = pygame.transform.scale(self.image_png, (50,50))
+        image = pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png'))
+        self.image = pygame.transform.scale(image, (50,50))
         self.width, self.height = 50, 50
         self.rect = self.image.get_rect()
         self.rect.x += 50
         self.x = 0
+        self.y = 0
+        self.X = 600
+        self.Y = 600
+        self.X_pos = 0
         self.Run_right = []
         self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')))
         self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run1.png')))
@@ -57,16 +57,12 @@ class Character(pygame.sprite.Sprite):
         self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle10.gif')))
         self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle11.gif')))
         self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle12.gif')))
-        self.y = 0
-        self.gravity = 9.8
-        self.X = 600
-        self.Y = 600
-        self.X_pos = 0
         self.left_bool = False
         self.right_bool = False
         self.chillCount = 0
         self.runCount = 0
         self.airTicks = 0
+        self.gravity = 4.9
         self.platforms = platforms
         self.bullets = bullets
         self.clock = pygame.time.Clock()
@@ -79,9 +75,38 @@ class Character(pygame.sprite.Sprite):
         self.x += x
         self.y += y
 
+    def update(self, tick):
+        self.rect.x += self.x
+        self.x = 0
+        fitness = 0
+        if self.jumping:
+            if self.jump >= 0:
+                self.rect.y -= (self.jump * abs(self.jump)) * 0.5
+                self.jump -= 1
+            else:
+                self.jump = 10
+                self.jumping = False
+
+        if not any([pygame.sprite.collide_rect(self, platform) for platform in self.platforms]):
+            self.rect.y += self.y + self.gravity
+            self.can_jump = False
+        else:
+            for platform in self.platforms:
+                if pygame.sprite.collide_rect(self, platform):
+                    if self.rect.bottom > platform.rect.bottom:
+                        self.rect.y += self.y + self.gravity
+                        self.can_jump = False
+                    else:
+                        self.rect.y += self.y
+                        self.jumping = False
+                        self.can_jump = True
+                        fitness += 2
+        #self.move_left(tick)
+        if any([pygame.sprite.collide_rect(self, bullet) for bullet in self.bullets]):
+            self.hit = True
+        return fitness
+
     def redrawGameWindow(self):
-
-
         if self.runCount + 1 >= 24:
             self.runCount = 0
 
@@ -107,49 +132,14 @@ class Character(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image_png, (50,50))
         return self.image
 
-    def update(self, tick):
-        self.rect.x += self.x
-        fitness = 0
-        
-
-        if self.jumping:
-            if self.jump >= 0:
-                self.rect.y -= (self.jump * abs(self.jump)) * 0.5
-                self.jump -= 1
-            else:
-                self.jump = 10
-                self.jumping = False
-
-        if not any([pygame.sprite.collide_rect(self, platform) for platform in self.platforms]):
-            self.rect.y += self.y + self.gravity
-            self.can_jump = False
-        else:
-            for platform in self.platforms:
-                if pygame.sprite.collide_rect(self, platform):
-                    if self.rect.bottom > platform.rect.bottom:
-                        self.rect.y += self.y + self.gravity
-                        self.can_jump = False
-                    else:
-                        self.rect.y += self.y
-                        self.jumping = False
-                        self.can_jump = True
-                        fitness += 2
-        self.move_left(tick)
-        if any([pygame.sprite.collide_rect(self, bullet) for bullet in self.bullets]):
-            self.hit = True
-        return fitness
-
-
     def move_left(self, tick):
         speed = .0589
         #clock = pygame.time.Clock()
         left = tick*speed
-        self.rect.x = self.rect.x + left
+        self.rect.x = self.rect.x - left
 
     def shoot(self):
         return Bullet(self.rect.x, self.rect.y, 1)
-
-    
 
 
 
@@ -164,45 +154,23 @@ if __name__ == "__main__":
             if e.type is pygame.KEYDOWN:
                 if e.key == ord('a'):
                     character.move(-10, 0)
-                    character.left_bool = True
-                    character.right_bool = False
-                    character.character.chillCount = 0
                 elif e.key == ord('d'):
                     character.move(10, 0)
-                    character.right_bool = True
-                    character.left_bool = False
-                    character.chillCount = 0
                 elif e.type is pygame.K_SPACE:
                     print("space")
-                else:
-                    character.left_bool = False
-                    character.right_bool = False
-                    character.runCount = 0
             if e.type is pygame.KEYUP:
                 if e.key == ord('a'):
                     character.move(10, 0)
-                    character.left_bool = False
-                    character.right_bool = True
-                    character.chillCount = 0
                 elif e.key == ord('d'):
                     character.move(-10, 0)
-                    character.left_bool = True
-                    character.right_bool = False
-                    character.chillCount = 0
                 elif e.type is pygame.K_SPACE:
                     print("space")
-                else:
-                    character.left_bool = False
-                    character.right_bool = False
-                    character.runCount = 0
 
             if e.type is pygame.QUIT:
                 pygame.quit()
                 sys.exit(0)
 
-        character.image = redrawGameWindow()
         character.update()
-        
         display.fill((25,25,200))
         characters.draw(display)
         pygame.display.flip()
