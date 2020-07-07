@@ -228,7 +228,7 @@ def main(genomes, config):
 def run(config_path):
     
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, config_path)
-    '''
+    
     p = neat.Population(config)
 
     p.add_reporter(neat.StdOutReporter(True))
@@ -236,6 +236,9 @@ def run(config_path):
     p.add_reporter(stats)
     p.add_reporter(neat.Checkpointer(50))
 
+    winner = p.run(main, 20)
+
+    pickle.dump(winner, open("winner.p", "wb"))
 
     '''
     p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-19')
@@ -251,8 +254,7 @@ def run(config_path):
 
     # Call game with only the loaded genome
     main(genomes, config)
-    
-
+    '''
 
 
 if __name__ == "__main__":
