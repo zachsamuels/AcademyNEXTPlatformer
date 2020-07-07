@@ -7,54 +7,10 @@ class Character(pygame.sprite.Sprite):
     '''
     Character class that handles movement and user input
     '''
-    Run_right = []
-    Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')))
-    Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run1.png')))
-    Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run3.png')))
-    Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run4.png')))
-    Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png')))
-    Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run6.png')))
-    Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run7.png')))
-    Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run8.png')))
-
-    Run_left = []
-    Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
-    Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run1.png')), True, False))
-    Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run3.png')), True, False))
-    Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run4.png')), True, False))
-    Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png')), True, False))
-    Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run6.png')), True, False))
-    Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run7.png')), True, False))
-    Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run8.png')), True, False))
-
-    MidAir = []
-    MidAir.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','mid_air1.gif')))
-    MidAir.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','mid_air2.gif')))
-
-    idle = []
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle1.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle2.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle3.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle4.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle5.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle6.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle7.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle8.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle9.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle10.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle11.gif')))
-    idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle12.gif')))
+    
 
     sky = (173, 216, 230) 
-  
-    X = 600
-    Y = 600
-    X_pos = 0
-    left = False
-    right = False
-    chillCount = 0
-    runCount = 0
-    airTicks = 0
+
 
     def __init__(self, platforms, bullets):
         pygame.sprite.Sprite.__init__(self)
@@ -64,8 +20,53 @@ class Character(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x += 50
         self.x = 0
+        self.Run_right = []
+        self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')))
+        self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run1.png')))
+        self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run3.png')))
+        self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run4.png')))
+        self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png')))
+        self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run6.png')))
+        self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run7.png')))
+        self.Run_right.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run8.png')))
+
+        self.Run_left = []
+        self.Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run0.png')), True, False))
+        self.Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run1.png')), True, False))
+        self.Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run3.png')), True, False))
+        self.Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run4.png')), True, False))
+        self.Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run5.png')), True, False))
+        self.Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run6.png')), True, False))
+        self.Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run7.png')), True, False))
+        self.Run_left.append(pygame.transform.flip(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','run8.png')), True, False))
+
+        self.MidAir = []
+        self.MidAir.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','mid_air1.gif')))
+        self.MidAir.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','mid_air2.gif')))
+
+        self.idle = []
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle1.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle2.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle3.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle4.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle5.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle6.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle7.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle8.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle9.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle10.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle11.gif')))
+        self.idle.append(pygame.image.load(os.path.join('sprite_art','Jungle Asset Pack','Character','sprites','idle12.gif')))
         self.y = 0
         self.gravity = 9.8
+        self.X = 600
+        self.Y = 600
+        self.X_pos = 0
+        self.left_bool = False
+        self.right_bool = False
+        self.chillCount = 0
+        self.runCount = 0
+        self.airTicks = 0
         self.platforms = platforms
         self.bullets = bullets
         self.clock = pygame.time.Clock()
@@ -79,32 +80,29 @@ class Character(pygame.sprite.Sprite):
         self.y += y
 
     def redrawGameWindow(self):
-        global runCount
-        global vspeed
-        global airTicks
-        global chillCount
 
-        if runCount + 1 >= 24:
-            runCount = 0
 
-        if airTicks + 1 >= 6:
-            airTicks = 0
+        if self.runCount + 1 >= 24:
+            self.runCount = 0
 
-        if chillCount + 1 >= 36:
-            chillCount = 0
+        if self.airTicks + 1 >= 6:
+            self.airTicks = 0
+
+        if self.chillCount + 1 >= 36:
+            self.chillCount = 0
 
         if self.jumping:
-            self.image_png = MidAir[airTicks//3]
-            airTicks += 1
-        elif left_bool:
-            self.image_png = Run_left[runCount//3]
-            runCount += 1
-        elif right_bool:
-            self.image_png = Run_right[runCount//3]
-            runCount += 1
+            self.image_png = self.MidAir[self.airTicks//3]
+            self.airTicks += 1
+        elif self.left_bool:
+            self.image_png = self.Run_left[self.runCount//3]
+            self.runCount += 1
+        elif self.right_bool:
+            self.image_png = self.Run_right[self.runCount//3]
+            self.runCount += 1
         else:
-            self.image_png = idle[chillCount//3]
-            chillCount += 1
+            self.image_png = self.idle[self.chillCount//3]
+            self.chillCount += 1
 
         self.image = pygame.transform.scale(self.image_png, (50,50))
         return self.image
@@ -166,37 +164,37 @@ if __name__ == "__main__":
             if e.type is pygame.KEYDOWN:
                 if e.key == ord('a'):
                     character.move(-10, 0)
-                    left_bool = True
-                    right_bool = False
-                    chillCount = 0
+                    character.left_bool = True
+                    character.right_bool = False
+                    character.character.chillCount = 0
                 elif e.key == ord('d'):
                     character.move(10, 0)
-                    right_bool = True
-                    left_bool = False
-                    chillCount = 0
+                    character.right_bool = True
+                    character.left_bool = False
+                    character.chillCount = 0
                 elif e.type is pygame.K_SPACE:
                     print("space")
                 else:
-                    left_bool = False
-                    right_bool = False
-                    runCount = 0
+                    character.left_bool = False
+                    character.right_bool = False
+                    character.runCount = 0
             if e.type is pygame.KEYUP:
                 if e.key == ord('a'):
                     character.move(10, 0)
-                    left_bool = False
-                    right_bool = True
-                    chillCount = 0
+                    character.left_bool = False
+                    character.right_bool = True
+                    character.chillCount = 0
                 elif e.key == ord('d'):
                     character.move(-10, 0)
-                    left_bool = True
-                    right_bool = False
-                    chillCount = 0
+                    character.left_bool = True
+                    character.right_bool = False
+                    character.chillCount = 0
                 elif e.type is pygame.K_SPACE:
                     print("space")
                 else:
-                    left_bool = False
-                    right_bool = False
-                    runCount = 0
+                    character.left_bool = False
+                    character.right_bool = False
+                    character.runCount = 0
 
             if e.type is pygame.QUIT:
                 pygame.quit()
