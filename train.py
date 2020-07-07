@@ -148,7 +148,6 @@ def main(genomes, config):
             for b in bullets:
                 if character.rect.x > b.rect.left:
                     b_index += 1
-                    #ge[i].fitness += 1
                 else:
                     break
             
@@ -156,7 +155,6 @@ def main(genomes, config):
             for e in enemies:
                 if character.rect.x > e.rect.left:
                     e_index += 1
-                    #ge[i].fitness += 1
                 else:
                     break
 
@@ -202,8 +200,9 @@ def main(genomes, config):
                 nets.pop(i)
                 ge.pop(i)
                 continue
+
             if character.hit:
-                ge[i].fitness -= 10
+                ge[i].fitness -= 1
                 char = characters.pop(i)
                 nets.pop(i)
                 ge.pop(i)
@@ -216,13 +215,14 @@ def main(genomes, config):
 def run(config_path):
     
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction, neat.DefaultSpeciesSet, neat.DefaultStagnation, config_path)
+    
     p = neat.Population(config)
 
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
 
-    winner = p.run(main, 1000)
+    winner = p.run(main, 100)
     pickle.dump(winner, open("winner.p", "wb"))
     '''
     with open('winner.p', "rb") as f:
@@ -234,6 +234,7 @@ def run(config_path):
     # Call game with only the loaded genome
     main(genomes, config)
     '''
+    
 
 
 

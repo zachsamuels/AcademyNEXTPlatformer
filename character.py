@@ -55,7 +55,7 @@ class Character(pygame.sprite.Sprite):
 						self.rect.y += self.y
 						self.jumping = False
 						self.can_jump = True
-						fitness += 2
+						#fitness += 2
 		#self.move_left(tick)
 		if any([pygame.sprite.collide_rect(self, bullet) for bullet in self.bullets]):
 			self.hit = True
