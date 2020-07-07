@@ -159,7 +159,7 @@ def main(genomes, config):
                     break
 
             try:
-                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, bullets[b_index].rect.x, bullets[b_index].rect.x, enemies[e_index].rect.x, enemies[e_index].rect.y, 875 - character.rect.x))
+                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, bullets[b_index].rect.x, bullets[b_index].rect.y, enemies[e_index].rect.x, enemies[e_index].rect.y, 875 - character.rect.x))
             except:
                 try:
                     output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-2].rect.left, platforms[p_index-2].rect.right, platforms[p_index-2].rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 0, 0, enemies[e_index].rect.x, enemies[e_index].rect.y, 875 - character.rect.x))
