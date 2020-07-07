@@ -7,7 +7,7 @@ class Enemy(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.width, self.height = 50, 50
 
-        image = pygame.image.load(os.path.join('images', 'character.png'))
+        image = pygame.transform.flip(pygame.image.load(os.path.join('sprite_art', '2D Pixel Dungeon Asset Pack', 'character and tileset', 'cleric.png')), True, False)
         self.image = pygame.transform.scale(image, (50,50))
         self.image = pygame.transform.flip(self.image, True, False)
         self.width, self.height = 50, 50
