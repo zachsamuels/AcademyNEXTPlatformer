@@ -31,6 +31,7 @@ Y = 600
 ground_tiles = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_3.png'))
 background = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_2.png'))
 further_background = pygame.image.load(os.path.join('sprite_art','Multi_Platformer_Tileset_v2','Grassland','Background','GrassLand_Background_1.png'))
+sun = pygame.image.load(os.path.join('sprite_art','sun.png'))
 sky = (173, 216, 230)
 
 #add basic platforms
@@ -90,6 +91,7 @@ def main(genomes, config):
             if bullet_counter % 100 == 0:
                 bullets.append(enemy.shoot())
         SCREEN.fill(sky)
+        SCREEN.blit(sun, (525, Y-475))
         SCREEN.blit(further_background, (0, Y - 520))
         SCREEN.blit(background, (0, Y - 460))
         SCREEN.blit(ground_tiles, (0, Y - 400))
