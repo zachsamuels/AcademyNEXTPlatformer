@@ -55,6 +55,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type is pygame.KEYDOWN:
+            if event.key == ord('a'):
+                character.move(-10, 0)
+            elif event.key == ord('d'):
+                character.move(10, 0)
             elif event.key == ord('w'):
                 if not character.jumping and character.can_jump:
                     character.jumping = True
@@ -137,4 +141,3 @@ while running:
 
 
     pygame.display.flip()
-
