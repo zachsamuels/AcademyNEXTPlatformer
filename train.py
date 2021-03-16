@@ -67,7 +67,7 @@ def main(genomes, config):
     score = 0
     clock = pygame.time.Clock()
 
-    while running:
+    while running:        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -102,7 +102,7 @@ def main(genomes, config):
             plat = GENERATOR.add_platform(last_platform_height)
             last_platform_height = plat.rect.y
             platforms.append(plat)
-            new_platform_mod = random.randint(50, 100)
+            new_platform_mod = random.randint(75, 125)
             counter = 0
             score += 1
             print(score)
@@ -159,12 +159,12 @@ def main(genomes, config):
                     break
 
             try:
-                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, bullets[b_index].rect.x, bullets[b_index].rect.y, enemies[e_index].rect.x, enemies[e_index].rect.y, 875 - character.rect.x))
+                output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, platforms[p_index].rect.left, platforms[p_index].rect.right, platforms[p_index].rect.y, bullets[b_index].rect.x, bullets[b_index].rect.y, enemies[e_index].rect.x, enemies[e_index].rect.y))
             except:
                 try:
-                    output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-2].rect.left, platforms[p_index-2].rect.right, platforms[p_index-2].rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 0, 0, enemies[e_index].rect.x, enemies[e_index].rect.y, 875 - character.rect.x))
+                    output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-2].rect.left, platforms[p_index-2].rect.right, platforms[p_index-2].rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 0, 0, enemies[e_index].rect.x, enemies[e_index].rect.y))
                 except:
-                    output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-2].rect.left, platforms[p_index-2].rect.right, platforms[p_index-2].rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, platforms[p_index-1].rect.y, 0, 0, 0, 0, 875 - character.rect.x))
+                    output = nets[i].activate((character.rect.x, character.rect.y, platforms[p_index-2].rect.left, platforms[p_index-2].rect.right, platforms[p_index-2].rect.y, platforms[p_index-1].rect.left, platforms[p_index-1].rect.right, 0, 0, 0, 0, platforms[p_index-1].rect.y))
 
             soft = neat.math_util.softmax(output)
             class_output = np.argmax(((soft / np.max(soft)) == 1).astype(int))
@@ -236,14 +236,14 @@ def run(config_path):
     p.add_reporter(stats)
     p.add_reporter(neat.Checkpointer(5))
 
-    winner = p.run(main, 20)
+    winner = p.run(main, 100)
 
     pickle.dump(winner, open("winner.p", "wb"))
 
     '''
-    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-19')
+    p = neat.Checkpointer.restore_checkpoint('neat-checkpoint-9')
     winner = p.run(main, 1)
-
+    
     pickle.dump(winner, open("winner.p", "wb"))
     
     with open('winner.p', "rb") as f:

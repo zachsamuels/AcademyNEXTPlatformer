@@ -55,10 +55,6 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type is pygame.KEYDOWN:
-            if event.key == ord('a'):
-                character.move(-10, 0)
-            elif event.key == ord('d'):
-                character.move(10, 0)
             elif event.key == ord('w'):
                 if not character.jumping and character.can_jump:
                     character.jumping = True
@@ -66,11 +62,11 @@ while running:
             #     if bullet_cooldown > 25:
             #         bullets.append(character.shoot())
             #         bullet_cooldown = 0
-        if event.type is pygame.KEYUP:
-            if event.key == ord('a'):
-                character.move(10, 0)
-            elif event.key == ord('d'):
-                character.move(-10, 0)
+        #if event.type is pygame.KEYUP:
+        #    if event.key == ord('a'):
+        #        character.move(10, 0)
+        #    elif event.key == ord('d'):
+        #        character.move(-10, 0)
 
     bullet_counter += 1
     bullet_cooldown += 1
@@ -141,3 +137,4 @@ while running:
 
 
     pygame.display.flip()
+
